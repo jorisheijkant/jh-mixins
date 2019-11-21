@@ -1,0 +1,45 @@
+// Responsive mixins
+
+@mixin respond-from($min) {
+	@media (min-width: $min) {
+		@content;
+	}
+}
+
+@mixin respond-until($max) {
+	@media (max-width: $max - 1) {
+		@content;
+	}
+}
+
+@mixin respond-between($min, $max) {
+	@media (min-width: $min) and (max-width: $max - 1) {
+		@content;
+	}
+}
+
+// Handy shortcuts
+
+@mixin wh($width, $height: none) {
+	width: $width;
+
+	@if($height == none) {
+		height: $width;
+	} @else {
+		height: $height;
+	}
+}
+
+@mixin flex-center() {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+}
+
+@mixin flex-center-row() {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: row;
+}

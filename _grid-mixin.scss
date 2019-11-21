@@ -1,0 +1,98 @@
+// The grid mixin
+
+@mixin grid-layout($item-width: 300px, $item-height: 300px, $gap: 30px, $side-spacing: 15px, $border: false) {
+	display: grid;
+	grid-gap: $gap;
+	grid-template-columns: 1fr;
+	max-width: $item-width;
+
+	justify-content: center;
+	justify-items: center;
+	align-content: center;
+	align-items: center;
+
+	.grid-item {
+		width: $item-width;
+		height: $item-height;
+	}
+
+	@media (max-width: 480px) {
+		max-width: 400px;
+		.grid-item {
+			width: 100%;
+		}
+	}
+
+	@media (min-width: 480px) and (max-width: #{2 * $item-width + 2 * $side-spacing + $gap}) {
+		grid-template-columns: 1fr;
+		max-width: 400px;
+
+		.grid-item {
+			width: 100%;
+		}
+	}
+
+	@media (min-width: #{2 * $item-width + 2 * $side-spacing + $gap}) and (max-width: #{3 * $item-width + 2 * $side-spacing + 2 * $gap}) {
+		grid-template-columns: 1fr 1fr;
+		max-width: #{2 * $item-width + 1 * $gap};
+	}
+
+	@media (min-width: #{3 * $item-width + 2 * $side-spacing + 2 * $gap}) and (max-width: #{4 * $item-width + 2 * $side-spacing + 3 * $gap}) {
+		grid-template-columns: 1fr 1fr 1fr;
+		max-width: #{3 * $item-width + 2 * $gap};
+	}
+
+	@media (min-width: #{4 * $item-width + 2 * $side-spacing + 3 * $gap}) {
+		grid-template-columns: 1fr 1fr 1fr 1fr;
+		max-width: #{4 * $item-width + 3 * $gap};
+	}
+
+	// The grid borders
+
+	@if($border != false) {
+		border-top: 1px solid $border;
+		padding-top: #{0.5 * $gap};
+
+		.grid-item:before {
+			content: '';
+			position: absolute;
+			bottom: #{-0.5 * $gap};
+			left: 0;
+			@include wh(100%, 1px);
+			background: $border;
+		}
+
+		.grid-item:after {
+			content: '';
+			position: absolute;
+			top: 0;
+			right: #{-0.5 * $gap};
+			@include wh(1px, 100%);
+			background: $border;
+		}
+
+		@media (max-width: #{2 * $item-width + 2 * $side-spacing + $gap}) {
+			.grid-item:after {
+				display: none;
+			}
+		}
+
+		@media (min-width: #{2 * $item-width + 2 * $side-spacing + $gap}) and (max-width: #{3 * $item-width + 2 * $side-spacing + 2 * $gap}) {
+			.grid-item:nth-child(2n):after {
+				display: none;
+			}
+		}
+
+		@media (min-width: #{3 * $item-width + 2 * $side-spacing + 2 * $gap}) and (max-width: #{4 * $item-width + 2 * $side-spacing + 3 * $gap}) {
+			.grid-item:nth-child(3n):after {
+				display: none;
+			}
+		}
+
+		@media (min-width: #{4 * $item-width + 2 * $side-spacing + 3 * $gap}) {
+			.grid-item:nth-child(4n):after {
+				display: none;
+			}
+		}
+	}
+}
